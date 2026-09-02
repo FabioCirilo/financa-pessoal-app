@@ -1,6 +1,7 @@
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import React from 'react'
 import HomePage from '../pages/Home'
+import NewMovement from '../pages/New'
 
 const AppDrawer = createDrawerNavigator()
 
@@ -23,6 +24,7 @@ function AppRoutes() {
       }}
     >
       <AppDrawer.Screen name="Home" component={HomePage} />
+      <AppDrawer.Screen name="New" component={NewMovement} />
     </AppDrawer.Navigator>
   )
 }
