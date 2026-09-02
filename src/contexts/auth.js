@@ -29,8 +29,38 @@ function AuthProvider({ children }) {
     }
   }
 
+  async function signIn(email, password) {
+    setLoadingAuth(true)
+
+    try {
+      const response = await api.post('/login', {
+        email: email,
+        password: password
+      })
+
+      const { id, name, token } = response.data
+
+      const data = {
+        id,
+        name,
+        email,
+        token
+      }
+
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      setUser(data)
+
+      setLoadingAuth(false)
+    } catch (err) {
+      console.log('ERRO AO ENTRAR', err)
+      setLoadingAuth(false)
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ SignIn: !!user, user, signUp, loadingAuth }}>
+    <AuthContext.Provider
+      value={{ signed: !!user, user, signUp, signIn, loadingAuth }}
+    >
       {children}
     </AuthContext.Provider>
   )
