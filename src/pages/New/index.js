@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { Background, Input, SubmitButton, SubmitText } from './styles'
 import Header from '../../components/Header'
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native'
+import RegisterTypes from '../../components/RegisterTypes'
 
 export default function NewMovement() {
   const [labelInput, setLabelInput] = useState('')
   const [valueInput, setValueInput] = useState('')
-  const [typeInput, setTypeInput] = useState('receita')
+  const [type, setType] = useState('receita')
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -25,6 +26,8 @@ export default function NewMovement() {
             value={valueInput}
             onChangeText={text => setValueInput(text)}
           />
+
+          <RegisterTypes type={type} sendTypeChanged={item => setType(item)} />
 
           <SubmitButton>
             <SubmitText>Registrar</SubmitText>
