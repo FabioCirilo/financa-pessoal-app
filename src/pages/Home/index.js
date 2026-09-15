@@ -47,7 +47,21 @@ export default function HomePage() {
     return () => {
       isActive = false
     }
-  }, [isFocused])
+  }, [isFocused, dateMovements])
+
+  async function handleDelete(id) {
+    try {
+      await api.delete('/receives/delete', {
+        params: {
+          item_id: id
+        }
+      })
+
+      setDateMovements(new Date())
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <Background>
@@ -71,7 +85,9 @@ export default function HomePage() {
       <List
         data={moviments}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <HistolicoList data={item} />}
+        renderItem={({ item }) => (
+          <HistolicoList data={item} deleteItem={handleDelete} />
+        )}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
       />
