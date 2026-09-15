@@ -22,7 +22,7 @@ export default function ProfileUser() {
 
       <Message>Hey, bem vindo de volta!</Message>
 
-      <Name numberOfLine={1}>F{user && user.name}</Name>
+      <Name numberOfLine={1}>{user && user.name}</Name>
 
       <NewLink onPress={() => navigation.navigate('New')}>
         <NewText>Fazer registro</NewText>
