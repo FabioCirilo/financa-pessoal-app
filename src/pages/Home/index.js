@@ -1,6 +1,6 @@
 import { create } from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
-import { Text, View, Button, TouchableOpacity } from 'react-native'
+import { Text, View, Button, TouchableOpacity, Modal } from 'react-native'
 import Header from '../../components/Header'
 import { Area, Background, List, ListBalance, Title } from './styles'
 
@@ -11,12 +11,14 @@ import { useIsFocused } from '@react-navigation/native'
 import BalanceItem from '../../components/BalanceItem'
 import { MaterialIcons } from '@expo/vector-icons'
 import HistolicoList from '../../components/HistoricoList'
+import CalendarModal from '../../components/CalendarModal'
 
 export default function HomePage() {
   const isFocused = useIsFocused()
   const [listBalance, setListBalance] = useState([])
   const [dateMovements, setDateMovements] = useState(new Date())
   const [moviments, setMoviments] = useState([])
+  const [modalVisible, setModalVisible] = useState(false)
 
   useEffect(() => {
     let isActive = true
@@ -63,6 +65,11 @@ export default function HomePage() {
     }
   }
 
+  function filterDateMovements(dateSelected) {
+    //console.log(dateSelected)
+    setDateMovements(dateSelected)
+  }
+
   return (
     <Background>
       <Header title="Minhas Movimentacoes" />
@@ -76,7 +83,7 @@ export default function HomePage() {
       />
 
       <Area>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
           <MaterialIcons name="event" color="#121212" size={30} />
         </TouchableOpacity>
         <Title>Últimas movimentações</Title>
@@ -91,6 +98,13 @@ export default function HomePage() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
       />
+
+      <Modal visible={modalVisible} animationType="fade" transparent={true}>
+        <CalendarModal
+          setVisible={() => setModalVisible(false)}
+          handleFilter={filterDateMovements}
+        />
+      </Modal>
     </Background>
   )
 }
